@@ -4,6 +4,7 @@ import Auth from "./screens/Auth";
 import Dashboard from "./screens/Dashboard";
 import { Container, Row } from "react-bootstrap";
 import Header from "./components/Header";
+import Popup from "./components/Popup";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         }}
       >
         <Header />
+        <Popup />
         <Routes>
           <Route path="/" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
