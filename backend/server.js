@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const adminRoutes = require("./routes/admin.js");
+const userRoutes = require("./routes/user.js");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json({ extended: true }));
 app.use(cors());
 
 app.use("/api/admin", adminRoutes);
+app.use("/api/user", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
