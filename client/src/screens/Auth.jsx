@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {login, register} from "../redux/actions/adminActions";
+import { login, register } from "../redux/actions/adminActions";
 import { useNavigate } from "react-router";
-import {setAlert} from "../redux/actions/alertAction";
+import { setAlert } from "../redux/actions/alertAction";
 const Auth = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -12,7 +12,7 @@ const Auth = () => {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {adminInfo} = useSelector(state => state.adminLogin)
+  const { adminInfo } = useSelector((state) => state.adminLogin);
   const [toggle, setToggle] = useState(false);
   const { email, name, password } = formData;
   const handleToggle = () => {
@@ -29,11 +29,10 @@ const Auth = () => {
   };
   useEffect(() => {
     if (adminInfo) {
-      navigate("/dashboard")
-      dispatch(setAlert(`Welcome ${adminInfo.name} !`, "success"))
-      
+      navigate("/dashboard");
+      dispatch(setAlert(`Welcome ${adminInfo.name} !`, "success"));
     }
-  }, [adminInfo])
+  }, [adminInfo]);
   return (
     <Container>
       <Row className="justify-content-md-center h-100 ">
@@ -77,7 +76,7 @@ const Auth = () => {
               </Form.Group>
               <div className="mt-3 text-center">
                 <p>
-                  {!toggle ? "Don't " : "Already "}have an account ?{" "}
+                  {!toggle ? "Don't " : "Already "}have an account ? {" "}
                   <Button
                     size="sm"
                     variant="outline-primary"
@@ -86,11 +85,14 @@ const Auth = () => {
                     Sign {toggle ? "In" : "Up"}
                   </Button>
                 </p>
+                <Row className = "my-1"> For Testing purposes use these credentials : </Row>
+                <Row className = "my-1"> email : admin@namasys.co</Row>
+                <Row className = "my-1">password : admin123</Row>
                 <Button
                   className="btn btn-block"
                   onClick={toggle ? handleRegister : handleLogin}
                 >
-                  Sign {!toggle ? "In" : "Up"}{" "}
+                  Sign {!toggle ? "In" : "Up"}
                 </Button>
               </div>
             </Form>

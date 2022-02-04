@@ -60,11 +60,11 @@ const Dashboard = () => {
           style={{ backgroundColor: "white" }}
         >
           <Tabs
-            defaultActiveKey="profile"
+            defaultActiveKey="add"
             id="uncontrolled-tab-example"
             className="mb-3"
           >
-            <Tab eventKey="home" title="Add new user">
+            <Tab eventKey="add" title="Add new user">
               <Form>
                 <Row className="mb-3">
                   <Form.Group as={Col}>
@@ -89,7 +89,6 @@ const Dashboard = () => {
                     />
                   </Form.Group>
                 </Row>
-
                 <Form.Group className="mb-3" controlId="formGridAddress1">
                   <Form.Label>Address</Form.Label>
                   <Form.Control
@@ -99,7 +98,6 @@ const Dashboard = () => {
                     onChange={handleChange}
                   />
                 </Form.Group>
-
                 <Form.Group className="mb-3">
                   <Form.Label>Email </Form.Label>
                   <Form.Control
@@ -115,7 +113,7 @@ const Dashboard = () => {
                 </Button>
               </Form>
             </Tab>
-            <Tab eventKey="profile" title="All users">
+            <Tab eventKey="all_users" title="All users">
               {loading ? (
                 "...LOADING"
               ) : (
@@ -126,6 +124,7 @@ const Dashboard = () => {
                       <th>Mobile Number</th>
                       <th>Address</th>
                       <th>Email</th>
+                      <th>Deleye</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -135,7 +134,8 @@ const Dashboard = () => {
                         <td>{u.mobile}</td>
                         <td>{u.address}</td>
                         <td>{u.email}</td>
-                        <td><Button onClick = {() => handleDelete(u._id)}>Delete</Button></td>
+                        <td><Button onClick = {() => handleDelete(u._id)}>Delete</Button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
