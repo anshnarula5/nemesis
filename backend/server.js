@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const adminRoutes = require("./routes/admin.js");
+const dotenv = require("dotenv");
+dotenv.config();
 
 mongoose
   .connect(

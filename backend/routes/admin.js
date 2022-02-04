@@ -67,13 +67,11 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const e = errors.errors.map((err) => err.msg);
-      res.status(400);
       throw new Error(e);
     }
     const { email, password} = req.body;
     const admin = await Admin.findOne({ email });
     if (!admin) {
-      res.status(400);
       throw new Error("User does not exists");
     }
       const isMatched = await bcryptjs.compare(password, admin.password)
