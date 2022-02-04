@@ -9,7 +9,7 @@ dotenv.config();
 
 mongoose
   .connect(
-    "mongodb+srv://ansh:ansh123@cluster0.zwujh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    process.env.DB_URL
   )
   .then(() => console.log("Mongoose running"))
   .catch((err) => console.log("Mongoose Error : ", err));

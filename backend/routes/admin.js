@@ -12,7 +12,7 @@ const Admin = require("../models/Admin");
 const registerValidator = [
   check("name", "Name is required").trim().not().isEmpty(),
   check("email", "Enter correct email").isEmail(),
-  check("password", "Password should be minimum 5 characters long")
+  check("password", "Password should be atleast 6 characters long")
     .trim()
     .isLength({ min: 5 }),
 ];
@@ -41,7 +41,7 @@ router.post(
       // name,
       id: createdAdmin._id,
     };
-    const token = await jwt.sign(payload, "secret", { expiresIn: 300 });
+    const token = await jwt.sign(payload, "secret", { expiresIn: 36000 });
     res.json({
       name,
       email,
@@ -55,7 +55,7 @@ router.post(
 
 const loginValidator = [
   check("email", "Enter correct email").isEmail(),
-  check("password", "Password should be minimum 5 characters long")
+  check("password", "Password should be atleast 6 characters long")
     .trim()
     .isLength({ min: 5 }),
 ];
@@ -83,7 +83,7 @@ router.post(
       // name,
       id: admin._id,
     };
-    const token = await jwt.sign(payload, "secret", { expiresIn: 300 });
+    const token = await jwt.sign(payload, "secret", { expiresIn: 36000 });
     res.json({
       name : admin.name,
       email,
