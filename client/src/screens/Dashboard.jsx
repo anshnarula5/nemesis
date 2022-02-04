@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -11,17 +11,40 @@ import {
   Table,
   Tabs,
 } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { setAlert } from "../redux/actions/alertAction";
+import { addUser, getAllUsers } from "../redux/actions/userActions";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { adminInfo } = useSelector((state) => state.adminLogin);
+  const { success } = useSelector((state) => state.addUser);
+  const { loading, users } = useSelector((state) => state.allUsers);
   useEffect(() => {
     if (!adminInfo) {
       navigate("/");
     }
   }, [adminInfo]);
+  const [formData, setFormData] = useState({
+    email: "",
+    username: "",
+    mobile: "",
+    address: "",
+  });
+  const { email, mobile, address, username } = formData;
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = () => {
+    dispatch(addUser(formData));
+    setFormData({ email: "", username: "", mobile: "", address: "" });
+    dispatch(setAlert("User added successfully!", "success"));
+  };
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [success]);
   return (
     <Container>
       <Row className=" my-5">
@@ -41,61 +64,77 @@ const Dashboard = () => {
                 <Row className="mb-3">
                   <Form.Group as={Col}>
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" placeholder="Enter Username" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Username"
+                      name="username"
+                      value={username}
+                      onChange={handleChange}
+                    />
                   </Form.Group>
 
                   <Form.Group as={Col}>
                     <Form.Label>Mobile Number</Form.Label>
-                    <Form.Control type="text" placeholder="Mobile Number" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Mobile Number"
+                      name="mobile"
+                      value={mobile}
+                      onChange={handleChange}
+                    />
                   </Form.Group>
                 </Row>
 
                 <Form.Group className="mb-3" controlId="formGridAddress1">
                   <Form.Label>Address</Form.Label>
-                  <Form.Control placeholder="1234 Main St" />
+                  <Form.Control
+                    placeholder="1234 Main St"
+                    name="address"
+                    value={address}
+                    onChange={handleChange}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                   <Form.Label>Email </Form.Label>
-                  <Form.Control placeholder="Enter email" />
+                  <Form.Control
+                    placeholder="Enter email"
+                    name="email"
+                    value={email}
+                    onChange={handleChange}
+                  />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button variant="primary" onClick={handleSubmit}>
                   Submit
                 </Button>
               </Form>
             </Tab>
             <Tab eventKey="profile" title="All users">
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Mobile Number</th>
-                    <th>Address</th>
-                    <th>Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <td >Larry the Bird</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </Table>
+              {loading ? (
+                "...LOADING"
+              ) : (
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                      <th>Mobile Number</th>
+                      <th>Address</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((u) => (
+                      <tr key={u._id}>
+                        <td>{u.username}</td>
+                        <td>{u.mobile}</td>
+                        <td>{u.address}</td>
+                        <td>{u.email}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
             </Tab>
           </Tabs>
         </Col>
