@@ -14,13 +14,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { setAlert } from "../redux/actions/alertAction";
-import { addUser, getAllUsers } from "../redux/actions/userActions";
+import { addUser, deleteUser, getAllUsers } from "../redux/actions/userActions";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { adminInfo } = useSelector((state) => state.adminLogin);
   const { success } = useSelector((state) => state.addUser);
+  const { success : deleteSuccess } = useSelector((state) => state.deleteUser);
   const { loading, users } = useSelector((state) => state.allUsers);
   useEffect(() => {
     if (!adminInfo) {
@@ -39,12 +40,16 @@ const Dashboard = () => {
   };
   const handleSubmit = () => {
     dispatch(addUser(formData));
-    setFormData({ email: "", username: "", mobile: "", address: "" });
     dispatch(setAlert("User added successfully!", "success"));
+    setFormData({ email: "", username:"", mobile: "", address: "" });
   };
   useEffect(() => {
     dispatch(getAllUsers());
-  }, [success]);
+  }, [success, deleteSuccess]);
+  const handleDelete = (id) => {
+    dispatch(deleteUser(id))
+    dispatch(setAlert("User deleted", "success"));
+  }
   return (
     <Container>
       <Row className=" my-5">
@@ -130,6 +135,7 @@ const Dashboard = () => {
                         <td>{u.mobile}</td>
                         <td>{u.address}</td>
                         <td>{u.email}</td>
+                        <td><Button onClick = {() => handleDelete(u._id)}>Delete</Button></td>
                       </tr>
                     ))}
                   </tbody>

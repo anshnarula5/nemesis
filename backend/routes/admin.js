@@ -41,7 +41,7 @@ router.post(
       // name,
       id: createdAdmin._id,
     };
-    const token = await jwt.sign(payload, "secret", { expiresIn: 360000000 });
+    const token = await jwt.sign(payload, "secret", { expiresIn: 300 });
     res.json({
       name,
       email,
@@ -83,7 +83,7 @@ router.post(
       // name,
       id: admin._id,
     };
-    const token = await jwt.sign(payload, "secret", { expiresIn: 360000000 });
+    const token = await jwt.sign(payload, "secret", { expiresIn: 300 });
     res.json({
       name : admin.name,
       email,

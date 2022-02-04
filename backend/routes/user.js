@@ -41,4 +41,17 @@ router.get(
   })
 );
 
+// delete a user
+
+router.delete(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const {id }= req.params
+    console.log(id)
+    const user = await User.findByIdAndDelete(id)
+    res.json(user)
+  })
+);
+
+
 module.exports = router;

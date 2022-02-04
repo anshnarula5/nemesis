@@ -3,6 +3,9 @@ import {
   ADD_USER_FAIL,
   ADD_USER_REQUEST,
   ADD_USER_SUCCESS,
+  DELETE_USER_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
   GET_USER_FAIL,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
@@ -51,6 +54,31 @@ export const getAllUsers = () => async (dispatch) => {
     );
     dispatch({
       type: GET_USER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_USER_REQUEST });
+    console.log(id)
+    const res = await axios.delete(`${URL}/${id}`);
+    dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch(
+      setAlert(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+        "danger"
+      )
+    );
+    dispatch({
+      type: DELETE_USER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
