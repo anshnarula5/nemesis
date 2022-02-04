@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { login, register } from "../redux/actions/adminActions";
+import { useDispatch, useSelector } from "react-redux";
+import {login, register} from "../redux/actions/adminActions";
+import { useNavigate } from "react-router";
+import {setAlert} from "../redux/actions/alertAction";
 const Auth = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -9,6 +11,8 @@ const Auth = () => {
     password: "",
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {adminInfo} = useSelector(state => state.adminLogin)
   const [toggle, setToggle] = useState(false);
   const { email, name, password } = formData;
   const handleToggle = () => {
@@ -23,6 +27,13 @@ const Auth = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  useEffect(() => {
+    if (adminInfo) {
+      navigate("/dashboard")
+      dispatch(setAlert(`Welcome ${adminInfo.name} !`, "success"))
+      
+    }
+  }, [adminInfo])
   return (
     <Container>
       <Row className="justify-content-md-center h-100 ">

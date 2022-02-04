@@ -3,13 +3,13 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./redux/reducers";
 
-const userInfoFromLocalStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
+const adminInfoFromLocalStorage = localStorage.getItem("adminInfo")
+  ? JSON.parse(localStorage.getItem("adminInfo"))
   : null;
 
 const initialState = {
-  userLogin: {
-    userInfo: userInfoFromLocalStorage,
+  adminLogin: {
+    adminInfo: adminInfoFromLocalStorage,
   },
 };
 

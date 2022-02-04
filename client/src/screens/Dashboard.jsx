@@ -1,7 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Button, Card, Col, Container, Nav, Row } from "react-bootstrap";
+import {useSelector} from "react-redux";
+import { useNavigate } from "react-router";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const {adminInfo} = useSelector(state => state.adminLogin)
+  useEffect(() => {
+    if (!adminInfo) {
+      navigate("/")
+    }
+  }, [adminInfo])
   return (
     <Container>
       <Row className="h-100">
