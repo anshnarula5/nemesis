@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { setAlert } from "./alertAction";
 
-const URL = "http://localhost:5000/api/admin";
+const URL = "https://nemesis-backend123.herokuapp.com/api/admin";
 
 export const login =
   ({ email, password }) =>

@@ -9,10 +9,10 @@ const Alert = () => {
         alerts.length !== 0 &&
         alerts.map((alert) => (
           <div
-            className={`alert alert-${alert.type} text-center mt-5 w-25 mx-auto p-2 `}
+            className={`popup alert alert-${alert.type} text-center mt-5 w-25 mx-auto p-2  `}
             key={Math.random()}
             role="alert"
-            style={{ position: "absolute", left: "33rem", zIndex: 100000000 }}
+            style={{ position: "fixed", left: "33rem", zIndex: 100000000 }}
           >
             {alert.message}
           </div>

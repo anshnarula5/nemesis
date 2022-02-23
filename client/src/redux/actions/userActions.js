@@ -12,13 +12,15 @@ import {
 } from "../types";
 import { setAlert } from "./alertAction";
 
-const URL = "http://localhost:5000/api/user";
+const URL = "https://nemesis-backend123.herokuapp.com/api/user";
 
 export const addUser = (formData) => async (dispatch) => {
   try {
     dispatch({ type: ADD_USER_REQUEST });
     const res = await axios.post(`${URL}`, formData);
-    dispatch({ type: ADD_USER_SUCCESS, payload: res.data });
+    dispatch({type: ADD_USER_SUCCESS, payload: res.data});
+    dispatch(setAlert("User added successfully!", "success"));
+    
   } catch (error) {
     dispatch(
       setAlert(
@@ -67,7 +69,9 @@ export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: DELETE_USER_REQUEST });
     console.log(id)
     const res = await axios.delete(`${URL}/${id}`);
-    dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
+    dispatch({type: DELETE_USER_SUCCESS, payload: res.data});
+    dispatch(setAlert("User deleted", "success"));
+    
   } catch (error) {
     dispatch(
       setAlert(

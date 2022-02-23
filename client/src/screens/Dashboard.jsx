@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  Card,
   Col,
   Container,
   Form,
-  Nav,
   Row,
   Tab,
   Table,
@@ -13,7 +11,6 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { setAlert } from "../redux/actions/alertAction";
 import { addUser, deleteUser, getAllUsers } from "../redux/actions/userActions";
 
 const Dashboard = () => {
@@ -27,7 +24,7 @@ const Dashboard = () => {
     if (!adminInfo) {
       navigate("/");
     }
-  }, [adminInfo]);
+  }, [adminInfo, navigate]);
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -40,15 +37,13 @@ const Dashboard = () => {
   };
   const handleSubmit = () => {
     dispatch(addUser(formData));
-    dispatch(setAlert("User added successfully!", "success"));
     setFormData({ email: "", username:"", mobile: "", address: "" });
   };
   useEffect(() => {
     dispatch(getAllUsers());
-  }, [success, deleteSuccess]);
+  }, [success, deleteSuccess, dispatch]);
   const handleDelete = (id) => {
     dispatch(deleteUser(id))
-    dispatch(setAlert("User deleted", "success"));
   }
   return (
     <Container>
